@@ -1,11 +1,11 @@
-# Turn the internal LED on to check if the board
+# Turn an external LED on to check if the board
 # is functional and MicroPython was installed
 # correctly
 
 from machine import Pin
 import time
 
-led = Pin("LED", Pin.OUT)
+led = Pin(0, Pin.OUT)
 
 while True:
     led.toggle()
