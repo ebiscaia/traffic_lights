@@ -9,7 +9,11 @@
 # and keys 1 and 3 are not both on
 # Lights 2 and 4 will be on if neighter keys 1 and 3 are on
 
-from machine import Pin
+# Last add a LDR and measure its changes for when it is bright
+# and dark
+
+from machine import Pin, ADC
+from time import sleep
 
 
 def ledOff(lights):
@@ -38,6 +42,10 @@ key2 = Pin(17, Pin.IN)
 key3 = Pin(18, Pin.IN)
 key4 = Pin(19, Pin.IN)
 
+# For the LDR readings
+conversion_factor = 3.3 / 65536
+ldr = ADC(26)
+
 
 # Aggregate the leds and keys into lists corresponding to their directions
 NS_leds = [led1, led3]
@@ -58,3 +66,8 @@ while True:
         ledOn(EW_leds)
     else:
         ledOn(NS_leds)
+
+    # print the values of LDR so that we can determine its range
+    ldr_converted = ldr.read_u16() * conversion_factor
+    print(ldr_converted)
+    sleep(0.5)
